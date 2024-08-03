@@ -67,10 +67,30 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "slide-half-right": {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        "slide-half-left": {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(50%)" },
+        },
+        "slide-right": {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(0)" },
+        },
+        "slide-left": {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-half-right": "slide-half-right 0.6s ease-out",
+        "slide-half-left": "slide-half-left 0.6s ease-out",
+        "slide-right": "slide-right 0.6s ease-out",
+        "slide-left": "slide-left 0.6s ease-out",
       },
     },
   },

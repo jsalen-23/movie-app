@@ -7,7 +7,7 @@ import Navigation from "./Navigation";
 
 export default function Header() {
   return (
-    <nav>
+    <header className="sticky top-0 z-10">
       <div className="max-w-[1440px] p-4 mx-auto flex items-center justify-between">
         <div>
           <Link
@@ -34,6 +34,6 @@ export default function Header() {
           <Navigation />
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

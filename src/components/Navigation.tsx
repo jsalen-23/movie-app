@@ -1,8 +1,7 @@
 "use client";
 
-import { Menu, User } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
-import style from "./styles/global.module.css";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { usePathname } from "next/navigation";
@@ -51,8 +50,7 @@ function MainMenu() {
               className={clsx(
                 pathname === link.href && "font-bold cursor-default pointer-events-none",
                 pathname !== link.href && "hover:opacity-80",
-                "text-lg lg:text-base text-primary transition-opacity duration-400",
-                style.linkunderline
+                "text-lg lg:text-base text-primary transition-opacity duration-400 link-underline"
               )}
             >
               {link.label}
@@ -62,7 +60,7 @@ function MainMenu() {
         <li className="mt-auto">
           <Link
             href="/account"
-            className={`flex justify-center items-center gap-1 text-xl lg:text-base ${style.pill}`}
+            className="flex justify-center items-center gap-1 px-4 py-2 text-xl lg:text-base pill"
           >
             Account
           </Link>
