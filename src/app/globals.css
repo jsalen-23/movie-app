@@ -29,6 +29,13 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --primary-red: 3 75% 51%;
+    --dark-red: 342 74% 5%;
+    --red-overlay: 300 0% 0%;
+    --dark-blue: 244 10;
+    --blue-overlay: 244 50% 22%;
+    --dark-green: 146 00;
+    --green-overlay: 141 58% 27%;
   }
 
   .dark {

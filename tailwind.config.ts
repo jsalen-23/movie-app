@@ -52,6 +52,27 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        primaryRed: {
+          DEFAULT: "hsl(var(--primary-red))"
+        },
+        darkRed: {
+          DEFAULT: "hsl(var(--dark-red))"
+        },
+        redOverlay: {
+          DEFAULT: "hsl(var(--red-overlay))",
+        },
+        darkBlue: {
+          DEFAULT: "hsl(var(--dark-blue))",
+        },
+        blueOverlay: {
+          DEFAULT: "hsl(var(--blue-overlay))",
+        },
+        darkGreen: {
+          DEFAULT: "hsl(var(--dark-green))",
+        },
+        greenOverlay: {
+          DEFAULT: "hsl(var(--green-overlay))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
