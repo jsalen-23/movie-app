@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function parseRating(rating: number): string {
@@ -13,4 +13,31 @@ export function parseRating(rating: number): string {
   }
 
   return parsedRating;
-};
+}
+
+export function parseDate(date: string): string {
+  return new Date(date).getFullYear().toString();
+}
+
+export function parseMovieInfo({
+  adult,
+  releaseDate,
+  runtime,
+  voteAverage,
+}: {
+  adult: boolean;
+  releaseDate: string;
+  runtime: number;
+  voteAverage: number;
+}): string[] {
+  const parsedRating = parseRating(voteAverage);
+  const parsedDate = parseDate(releaseDate);
+  const parsedInfo = [
+    adult ? '+18' : '',
+    parsedDate,
+    `${runtime} min`,
+    parsedRating,
+  ].filter(value => Boolean(value));
+
+  return parsedInfo;
+}

@@ -9,9 +9,7 @@ import clsx from "clsx";
 
 const navigationLinks = [
   { href: "/", label: "Home" },
-  { href: "/series", label: "Series" },
   { href: "/movies", label: "Movies" },
-  { href: "/latest", label: "Latests" },
 ];
 
 export default function Navigation() {

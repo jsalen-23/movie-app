@@ -15,7 +15,7 @@ export default function Header() {
             aria-label="Go home"
             className="flex gap-1 items-center text-sky-500"
           >
-            <Image src="logo.svg" width={160} height={80} alt="Logo" />
+            <Image src="/logo.svg" width={160} height={80} alt="Logo" />
           </Link>
         </div>
         <div className="hidden lg:block lg:flex-1 max-w-[550px]">
@@ -25,8 +25,8 @@ export default function Header() {
               placeholder="Search a movie..."
               type="search"
             />
-            <Button type="submit" className="rounded-l-none absolute right-0">
-              <Search size={20} className="text-slate-50 " />
+            <Button type="submit" className="rounded-l-none absolute right-0 background dark:bg-primary border border-solid border-[#afafaf6f]">
+              <Search size={20} />
             </Button>
           </form>
         </div>

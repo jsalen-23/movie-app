@@ -76,7 +76,7 @@
 }
 
 .link-underline {
-  @apply relative after:absolute after:content-[''] after:h-[1.5px] after:w-[0%] after:bg-[red] after:transition-[width] after:duration-300 after:-translate-x-2/4 after:left-2/4 after:-bottom-1 hover:after:w-4/5;
+  @apply relative after:absolute after:content-[''] after:h-[1.5px] after:w-[0%] after:bg-[red] after:transition-[width] after:duration-300 after:-translate-x-2/4 after:left-2/4 after:-bottom-1 hover:after:w-4/5 group-hover:after:w-4/5;
 }
 
 .pill {

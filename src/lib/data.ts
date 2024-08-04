@@ -1,4 +1,4 @@
-import { AllResources, Resource } from './definitions';
+import { AllResources, Movie, Resource } from './definitions';
 
 export enum ENDPOINTS {
   allResources = '/trending/all/week',
@@ -6,7 +6,7 @@ export enum ENDPOINTS {
   tv = '/tv',
 }
 
-function getUrl(endpoint: ENDPOINTS): string {
+function getUrl(endpoint: ENDPOINTS | string): string {
   const BASE_URL = process.env.API_URL;
   const API_KEY = process.env.API_KEY;
 
@@ -44,6 +44,20 @@ export async function getAllResources(): Promise<Resource[]> {
   }
 }
 
+export async function fetchMovie(id: string): Promise<Movie> {
+  try {
+    const endpoint = getUrl(ENDPOINTS.movie + `/${id}`);
+    const response = await fetchAPI<Movie>(endpoint);
+
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch movie', error);
+    throw error;
+  }
+}
+
 function parseResource(resource: Resource[]): Resource[] {
-  return resource.filter((item) => item.title && item.poster_path);
+  return resource.filter(
+    item => item.title && item.poster_path && item.media_type === 'movie',
+  );
 }

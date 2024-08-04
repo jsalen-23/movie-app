@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Star } from 'lucide-react';
 import { Resource } from '@/lib/definitions';
 import { parseRating } from '@/lib/utils';
+import { tmdbImageLink } from '@/lib/constants';
 
 export default function Card({
   id,
@@ -12,7 +13,7 @@ export default function Card({
   poster_path,
 }: Resource) {
   const articleUrl = `/${media_type}/${id}`;
-  const articleImage = `http://image.tmdb.org/t/p/original${poster_path}`;
+  const articleImage = `${tmdbImageLink}${poster_path}`;
 
   return (
     <article className="rounded-xl">

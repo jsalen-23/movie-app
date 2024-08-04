@@ -3,7 +3,7 @@ import HeroBanner from "@/components/HeroBanner";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex flex-col items-center">
       <section className="w-full max-w-[1140px] lg:pt-20">
         <HeroBanner />
       </section>
