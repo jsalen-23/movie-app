@@ -11,15 +11,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useActionState } from 'react';
-import { authenticate } from '@/lib/actions';
 
 export default function LoginForm() {
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined,
-  );
-
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -28,7 +21,7 @@ export default function LoginForm() {
           Enter your email below to login to your account.
         </CardDescription>
       </CardHeader>
-      <form action={formAction}>
+      <form>
         <CardContent className="grid gap-4 pb-2">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -46,13 +39,8 @@ export default function LoginForm() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
-          <div className="flex h-8 items-end space-x-1">
-            {errorMessage && (
-              <p className="text-red-500 text-sm">{errorMessage}</p>
-            )}
-          </div>
-          <Button className="w-full bg-primaryRed hover:bg-initial text-primary pill" disabled={isPending}>
-            {isPending ? 'Submitting...' : 'Login'}
+          <Button className="w-full bg-primaryRed hover:bg-initial text-primary pill">
+            Login
           </Button>
         </CardFooter>
       </form>
