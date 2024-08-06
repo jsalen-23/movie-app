@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth/next';
 import Credentials from 'next-auth/providers/credentials';
 import prisma from '@/lib/db';
+import { signIn } from 'next-auth/react';
 
 const bcrypt = require('bcrypt');
 
@@ -39,6 +40,9 @@ const authOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: '/login'
+  },
 };
 
 const handler = NextAuth(authOptions);
