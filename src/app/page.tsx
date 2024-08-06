@@ -1,5 +1,5 @@
-import FeaturedList from "@/components/FeaturedList";
-import HeroBanner from "@/components/HeroBanner";
+import FeaturedList from "@/components/featured-list";
+import HeroBanner from "@/components/hero-banner";
 
 export default function Home() {
   return (

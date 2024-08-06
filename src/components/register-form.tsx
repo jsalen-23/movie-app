@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -12,9 +10,10 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Inputs {
   name: string;
@@ -36,27 +35,33 @@ export default function RegisterForm() {
 
   const onSubmit: SubmitHandler<Inputs> = async formValues => {
     setLoading(true);
-    const response = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formValues),
-    });
 
-    setLoading(false);
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      });
 
-    if (response.ok) {
-      push('/login');
-      return;
-    } else {
-      setServerError(true);
+      setLoading(false);
 
-      if (response.status === 409) {
-        setErrorMessage('User already exists');
+      if (response.ok) {
+        push('/login');
+        return;
       } else {
-        setErrorMessage('Something went wrong');
+        setServerError(true);
+
+        if (response.status === 409) {
+          setErrorMessage('User already exists');
+        } else {
+          setErrorMessage('Something went wrong');
+        }
       }
+    } catch (error) {
+      setServerError(true);
+      setErrorMessage('An error occurred. Please try again.');
     }
   };
 

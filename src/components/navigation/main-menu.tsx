@@ -13,7 +13,7 @@ export default function MainMenu() {
   const pathname = usePathname();
 
   return (
-    <nav className="h-full">
+    <nav>
       <ul className="h-full flex flex-col gap-6 lg:flex-row lg:items-center">
         {navigationLinks.map(link => (
           <li key={link.href}>

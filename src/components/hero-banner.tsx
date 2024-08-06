@@ -1,18 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Typography from './typography';
 
 export default function HeroBanner() {
   return (
     <div className="relative w-full pt-8 h-[600px] md:max-h-[500px] md:pt-16 overflow-hidden">
       <div className="max-w-[700px] px-4 mx-auto">
-        <h1 className="text-5xl text-primary text-center pb-8">
-          Your movies and series, finally in {' '}
+        <Typography type="h1" className="text-primary text-center pb-8">
+          Your movies and series, finally in{' '}
           <span className="underline-gradient"> one place</span>
-        </h1>
-        <p>
+        </Typography>
+        <Typography type="p">
           Meet MovieAPP, the free app that combines the most popular movies and
           series for easy search and discovery.
-        </p>
+        </Typography>
       </div>
       <div className="flex justify-center gap-3 mx-auto mt-6 px-4">
         <Link href="/series" className="w-full max-w-48 py-3 text-center pill">

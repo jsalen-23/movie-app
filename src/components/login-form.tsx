@@ -1,6 +1,5 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -12,10 +11,11 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { set, SubmitHandler, useForm } from 'react-hook-form';
 
 interface Inputs {
   email: string;
@@ -35,25 +35,30 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<Inputs> = async formValues => {
     setLoading(true);
 
-    const response = await signIn('credentials', {
-      email: formValues.email,
-      password: formValues.password,
-      redirect: false,
-    });
+    try {
+      const response = await signIn('credentials', {
+        email: formValues.email,
+        password: formValues.password,
+        redirect: false,
+      });
 
-    setLoading(false);
+      setLoading(false);
 
-    if (response && response.error) {
-      if (response.error === 'CredentialsSignin') {
-        setErrorMessage('Incorrect email or password');
-      } else {
-        setErrorMessage('An error occurred. Please try again.');
+      if (response && response.error) {
+        if (response.error === 'CredentialsSignin') {
+          setErrorMessage('Incorrect email or password');
+        } else {
+          setErrorMessage('An error occurred. Please try again.');
+        }
       }
-    }
 
-    if (response && !response.error) {
-      push('/');
-      refresh();
+      if (response && !response.error) {
+        push('/');
+        refresh();
+      }
+    } catch (error) {
+      setErrorMessage('An error occurred. Please try again.');
+      setLoading(false);
     }
   };
 

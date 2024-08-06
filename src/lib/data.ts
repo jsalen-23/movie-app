@@ -44,15 +44,22 @@ export async function getAllResources(): Promise<Resource[]> {
   }
 }
 
-export async function fetchMovie(id: string): Promise<Movie> {
+export async function fetchMovie(
+  id: string,
+): Promise<{ data?: Movie; error: boolean }> {
   try {
     const endpoint = getUrl(ENDPOINTS.movie + `/${id}`);
     const response = await fetchAPI<Movie>(endpoint);
 
-    return response;
+    return {
+      data: response,
+      error: false,
+    };
   } catch (error) {
-    console.error('Failed to fetch movie', error);
-    throw error;
+    return {
+      data: undefined,
+      error: true,
+    };
   }
 }
 
