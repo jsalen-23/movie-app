@@ -23,7 +23,7 @@ interface Inputs {
 }
 
 export default function LoginForm() {
-  const { push } = useRouter();
+  const { push, refresh } = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const {
@@ -53,6 +53,7 @@ export default function LoginForm() {
 
     if (response && !response.error) {
       push('/');
+      refresh();
     }
   };
 
