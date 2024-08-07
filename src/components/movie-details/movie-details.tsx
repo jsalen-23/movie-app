@@ -1,17 +1,21 @@
-import { Movie } from '@/lib/definitions';
 import { buttonVariants } from '@/components/ui/button';
+import { fetchMovie } from '@/lib/data';
 
 interface MovieDetailsProps {
   classNames?: string;
-  genres: Movie['genres'];
-  overview: Movie['overview'];
+  movieId: string;
 }
 
-export default function MovieDetails({
-  genres,
-  overview,
+export async function MovieDetails({
+  movieId,
   classNames,
 }: MovieDetailsProps) {
+  const { data } = await fetchMovie(movieId);
+
+  if (!data) return null;
+
+  const { genres, overview } = data;
+
   return (
     <div className={classNames}>
       {genres.length > 0 && (

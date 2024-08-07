@@ -1,5 +1,7 @@
 import FeaturedList from "@/components/featured-list";
 import HeroBanner from "@/components/hero-banner";
+import { CarouselSkeleton } from "@/components/skeletons";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -8,7 +10,9 @@ export default function Home() {
         <HeroBanner />
       </section>
       <section className="py-8 w-full max-w-[1140px] lg:pt-20">
-        <FeaturedList />
+        <Suspense fallback={<CarouselSkeleton />}>
+          <FeaturedList />
+        </Suspense>
       </section>
     </main>
   );

@@ -8,7 +8,7 @@ export default async function AddButton({ movieId }: { movieId: string }) {
   const addMovieToListWithId = addMovieToList.bind(null, movieId);
   const removeMovieFromListWithId = removeMovieFromList.bind(null, movieId);
   const session = await getServerSession(authOptions);
-  const userMovies = await fetchUserMovies();
+  const userMovies = session?.user && await fetchUserMovies();
   const userHasMovie = userMovies?.some(
     userMovie => userMovie.movieId === movieId,
   );

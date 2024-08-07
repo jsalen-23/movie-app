@@ -54,6 +54,10 @@ export async function getAllResources(): Promise<Resource[]> {
 export async function fetchMovie(
   id: string,
 ): Promise<{ data?: Movie; error: boolean }> {
+  if (!id) {
+    throw new Error('Movie ID is required');
+  }
+
   try {
     const endpoint = getUrl(ENDPOINTS.movie + `/${id}`);
     const response = await fetchAPI<Movie>(endpoint);
