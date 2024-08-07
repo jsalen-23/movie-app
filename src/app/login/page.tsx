@@ -1,4 +1,10 @@
 import LoginForm from "@/components/login-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "MovieAPP | Login",
+  description: "MovieAPP is a movie database app",
+};
 
 export default function LoginPage() {
   return (

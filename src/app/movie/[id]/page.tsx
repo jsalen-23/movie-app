@@ -12,13 +12,26 @@ import {
   MovieDetailDescriptionSkeleton,
   MovieDetailLinkSkeleton,
 } from '@/components/skeletons';
+import { fetchMovie } from '@/lib/data';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-export default async function MoviePage({
-  params,
-}: {
+type PageParams = {
   params: { id: string };
-}) {
+};
+
+export async function generateMetadata({
+  params,
+}: PageParams): Promise<Metadata> {
+  const { data } = await fetchMovie(params.id);
+
+  return {
+    title: `MovieAPP | ${data?.title}`,
+    description: 'User profile page',
+  };
+}
+
+export default async function MoviePage({ params }: PageParams) {
   return (
     <main className="flex flex-col items-center">
       <section className="w-full max-w-[1140px] py-5 px-4 lg:pt-10 flex flex-col gap-4">

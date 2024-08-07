@@ -1,7 +1,15 @@
 import { UserListSkeleton } from '@/components/skeletons';
 import UserHeading from '@/components/user-heading';
 import UserList from '@/components/user-list';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'MovieAPP | Profile',
+    description: 'User profile page',
+  };
+}
 
 export default function ProfilePage() {
   return (
