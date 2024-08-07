@@ -1,8 +1,8 @@
 import { Menu } from 'lucide-react';
-import AccountButton from '../account-button';
 import MainMenu from './main-menu';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '../ui/sheet';
+import DropdownAccountButton from './account-button';
 
 export default function MobileNavigation() {
   return (
@@ -21,7 +21,7 @@ export default function MobileNavigation() {
         >
           <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
           <MainMenu />
-          <AccountButton closesSheet />
+          <DropdownAccountButton />
         </SheetContent>
       </Sheet>
     </div>
