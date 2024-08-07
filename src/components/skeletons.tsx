@@ -64,3 +64,16 @@ export function MovieDetailDescriptionSkeleton() {
 export function MovieDetailButtonSkeleton() {
   return <Skeleton className="w-full h-14" />
 }
+
+export function UserListSkeleton() {
+  return (
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
+      <CardSkeleton className="hidden xl:block" />
+      <CardSkeleton className="hidden xl:block" />
+      <CardSkeleton className="hidden xl:block" />
+      <CardSkeleton className="hidden md:block" />
+      <CardSkeleton />
+      <CardSkeleton />
+    </div>
+  )
+}
