@@ -10,6 +10,19 @@ The application uses the [The Movie Database (TMDb) API](https://www.themoviedb.
 
 Database is handled by [PostgreSQL](https://www.postgresql.org/) and uses [Prisma](https://www.prisma.io/) as an ORM.
 
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Main Dependencies](#main-dependencies)
+
+## Features
+
+- User authentication with NextAuth.js
+- User can add movies to their favorites list
+- User can view their favorites list
+- User can remove movies from their favorites list
+- User can find latest trends movies
+
 ## Getting Started
 
 1. Install the dependencies:
@@ -31,10 +44,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Main Dependencies
 
