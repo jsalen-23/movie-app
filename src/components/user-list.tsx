@@ -7,6 +7,14 @@ import { ChevronRight } from 'lucide-react';
 export default async function UserList() {
   const movies = await fetchUserList();
 
+  if (!movies.length) {
+    return (
+      <>
+        <Typography type='p'>It seems you have not added any movies into your list. When you add them, you can find your curated list right here!</Typography>
+      </>
+    )
+  }
+
   return (
     <>
       <SectionHeading heading="Your favorites">

@@ -1,3 +1,5 @@
+import Typography from './typography';
+
 interface ErrorBannerProps {
   message?: string;
   heading: string;
@@ -12,20 +14,16 @@ export default function ErrorBanner({
   ctaText,
 }: ErrorBannerProps) {
   return (
-    <main className="flex flex-col items-center">
-      <section className="w-full max-w-[1140px] py-32 px-4">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl text-center">
-            {heading}
-          </h1>
-          {message && <p>{message}</p>}
-          {ctaLink && ctaText && (
-            <a href={ctaLink} className="mt-16 text-primary link-underline">
-              {ctaText}
-            </a>
-          )}
-        </div>
-      </section>
-    </main>
+    <div className="flex flex-col justify-center items-center">
+      <Typography type="h1" className="text-center pb-8">
+        {heading}
+      </Typography>
+      {message && <Typography type="p">{message}</Typography>}
+      {ctaLink && ctaText && (
+        <a href={ctaLink} className="mt-8 text-primary link-underline">
+          {ctaText}
+        </a>
+      )}
+    </div>
   );
 }

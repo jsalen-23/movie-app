@@ -122,8 +122,6 @@ export async function fetchUserMovies(): Promise<
       },
     });
 
-    if (!movies.length) throw new Error('User has no movies');
-
     return movies;
   } catch (error) {
     console.error(error);
@@ -134,7 +132,7 @@ export async function fetchUserMovies(): Promise<
 export async function fetchUserList(): Promise<Movie[]> {
   const userTmdbMovies = await fetchUserMovies();
 
-  if (!userTmdbMovies.length) throw new Error('User has no movies');
+  if (!userTmdbMovies.length) return [];
 
   try {
     const moviePromises = userTmdbMovies.map(movie =>
