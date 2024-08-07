@@ -1,5 +1,5 @@
 import { Movie } from '@/lib/definitions';
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@/components/ui/button';
 
 interface MovieDetailsProps {
   classNames?: string;

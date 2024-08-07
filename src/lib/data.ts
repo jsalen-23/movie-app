@@ -1,4 +1,7 @@
-import { AllResources, Movie, Resource } from './definitions';
+import { authOptions } from '@/auth';
+import { getServerSession } from 'next-auth';
+import prisma from './db';
+import { AllResources, Movie, Resource, User } from './definitions';
 
 export enum ENDPOINTS {
   allResources = '/trending/all/week',
@@ -67,4 +70,63 @@ function parseResource(resource: Resource[]): Resource[] {
   return resource.filter(
     item => item.title && item.poster_path && item.media_type === 'movie',
   );
+}
+
+export async function fetchUserByEmail(): Promise<User> {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    throw new Error('User not authenticated');
+  }
+
+  const userEmail = session.user.email;
+  if (!userEmail) {
+    throw new Error('User email not found');
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+      },
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch user');
+  }
+}
+
+export async function fetchUserMovies() {
+  try {
+    const user = await fetchUserByEmail();
+
+    const movies = await prisma.movie.findMany({
+      where: {
+        userId: user.id,
+      },
+      select: {
+        movieId: true,
+      },
+    });
+
+    if (!movies) {
+      throw new Error('Movies not found');
+    }
+
+    return movies;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch user movies');
+  }
 }

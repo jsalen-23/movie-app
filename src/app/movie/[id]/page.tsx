@@ -1,6 +1,6 @@
 import AddButton from '@/components/add-button';
 import ErrorBanner from '@/components/error-banner';
-import MovieDetails from '@/components/movie-details';
+import MovieDetails from '@/components/movie-details/movie-details';
 import MovieHeading from '@/components/movie-details/movie-heading';
 import { imdbLink, tmdbImageLink } from '@/lib/constants';
 import { fetchMovie } from '@/lib/data';
@@ -92,7 +92,7 @@ export default async function MoviePage({
           </div>
 
           <div className="row-start-3 row-end-4 col-start-2 col-end-3">
-            <AddButton />
+            <AddButton movieId={params.id} />
           </div>
         </div>
       </section>
