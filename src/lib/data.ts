@@ -109,7 +109,6 @@ export async function fetchUserMovies(): Promise<
 > {
   try {
     const user = await fetchUserByEmail();
-
     const movies = await prisma.movie.findMany({
       where: {
         userId: user.id,
@@ -119,9 +118,7 @@ export async function fetchUserMovies(): Promise<
       },
     });
 
-    if (!movies) {
-      throw new Error('Movies not found');
-    }
+    if (!movies.length) throw new Error('User has no movies');
 
     return movies;
   } catch (error) {
@@ -133,21 +130,12 @@ export async function fetchUserMovies(): Promise<
 export async function fetchUserList(): Promise<Movie[]> {
   const userTmdbMovies = await fetchUserMovies();
 
-  if (userTmdbMovies.length === 0) {
-    throw new Error('User has no movies');
-  }
+  if (!userTmdbMovies.length) throw new Error('User has no movies');
 
   try {
-    const moviePromises = userTmdbMovies.map(async movie => {
-      try {
-        const movieData = await fetchMovie(movie.movieId);
-
-        return movieData.data;
-      } catch (error) {
-        console.error(error);
-        return undefined;
-      }
-    });
+    const moviePromises = userTmdbMovies.map(movie =>
+      fetchMovie(movie.movieId).then(movieData => movieData.data),
+    );
 
     const movieList = await Promise.all(moviePromises);
 

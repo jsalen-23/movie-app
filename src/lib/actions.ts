@@ -2,14 +2,10 @@
 
 import { authOptions } from '@/auth';
 import { getServerSession } from 'next-auth';
-import prisma from './db';
 import { revalidatePath } from 'next/cache';
+import prisma from './db';
 
-export async function addMovieToList(movieId: string) {
-  if (!movieId) {
-    throw new Error('Movie ID not provided');
-  }
-
+async function getSessionUser() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
@@ -21,15 +17,30 @@ export async function addMovieToList(movieId: string) {
     throw new Error('User email not found');
   }
 
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  return user;
+}
+
+export async function addMovieToList(movieId: string) {
   try {
-    const user = await prisma.user.findUnique({
+    const user = await getSessionUser();
+
+    const existingMovie = await prisma.movie.findFirst({
       where: {
-        email: userEmail,
+        userId: user.id,
+        movieId,
       },
     });
 
-    if (!user) {
-      throw new Error('User not found');
+    if (existingMovie) {
+      throw new Error('Movie already in list');
     }
 
     await prisma.movie.create({
@@ -38,40 +49,17 @@ export async function addMovieToList(movieId: string) {
         movieId,
       },
     });
+
+    revalidatePath(`/movie/${movieId}`);
   } catch (error) {
     console.error(error);
     throw new Error('Failed to add movie to list');
   }
-
-  revalidatePath(`/movie/${movieId}`);
 }
 
 export async function removeMovieFromList(movieId: string) {
-  if (!movieId) {
-    throw new Error('Movie ID not provided');
-  }
-
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    throw new Error('User not authenticated');
-  }
-
-  const userEmail = session.user.email;
-  if (!userEmail) {
-    throw new Error('User email not found');
-  }
-
   try {
-    const user = await prisma.user.findUnique({
-      where: {
-        email: userEmail,
-      },
-    });
-
-    if (!user) {
-      throw new Error('User not found');
-    }
+    const user = await getSessionUser();
 
     const movie = await prisma.movie.findFirst({
       where: {
@@ -89,10 +77,10 @@ export async function removeMovieFromList(movieId: string) {
         id: movie.id,
       },
     });
+
+    revalidatePath(`/movie/${movieId}`);
   } catch (error) {
     console.error(error);
     throw new Error('Failed to remove movie from list');
   }
-
-  revalidatePath(`/movie/${movieId}`);
 }
