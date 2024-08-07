@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star } from 'lucide-react';
-import { Resource } from '@/lib/definitions';
+import { Movie, Resource } from '@/lib/definitions';
 import { parseRating } from '@/lib/utils';
 import { tmdbImageLink } from '@/lib/constants';
 
 export default function Card({
   id,
-  media_type,
+  media_type = 'movie',
   title,
   vote_average,
   poster_path,

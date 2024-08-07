@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 
 const navigationLinks = [
   { href: '/', label: 'Home' },
-  { href: '/movies', label: 'Movies' },
 ];
 
 export default function MainMenu() {

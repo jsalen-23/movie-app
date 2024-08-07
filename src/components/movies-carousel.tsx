@@ -1,6 +1,6 @@
 import { getAllResources } from '@/lib/data';
 import { EmblaOptionsType } from 'embla-carousel';
-import Card from './card';
+import Card from './movie-card';
 import {
   Carousel,
   CarouselContent,

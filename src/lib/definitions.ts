@@ -9,9 +9,9 @@ export interface Resource {
   adult: boolean;
   backdrop_path: string;
   first_air_date?: Date;
-  genre_ids: number[];
+  genre_ids?: number[];
   id: number;
-  media_type: MediaType;
+  media_type?: MediaType;
   name?: string;
   origin_country?: string[];
   original_language: string;

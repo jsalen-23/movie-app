@@ -6,7 +6,6 @@ import { AllResources, Movie, Resource, User } from './definitions';
 export enum ENDPOINTS {
   allResources = '/trending/all/week',
   movie = '/movie',
-  tv = '/tv',
 }
 
 function getUrl(endpoint: ENDPOINTS | string): string {
@@ -24,15 +23,20 @@ function getUrl(endpoint: ENDPOINTS | string): string {
 }
 
 async function fetchAPI<T>(url: RequestInfo): Promise<T> {
-  const response = await fetch(url);
+  try {
+    const response = await fetch(url);
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch API', error);
+    throw error;
   }
-
-  const data = await response.json();
-
-  return data;
 }
 
 export async function getAllResources(): Promise<Resource[]> {
@@ -73,16 +77,7 @@ function parseResource(resource: Resource[]): Resource[] {
 }
 
 export async function fetchUserByEmail(): Promise<User> {
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    throw new Error('User not authenticated');
-  }
-
-  const userEmail = session.user.email;
-  if (!userEmail) {
-    throw new Error('User email not found');
-  }
+  const userEmail = await getSessionEmail();
 
   try {
     const user = await prisma.user.findUnique({
@@ -107,7 +102,11 @@ export async function fetchUserByEmail(): Promise<User> {
   }
 }
 
-export async function fetchUserMovies() {
+export async function fetchUserMovies(): Promise<
+  {
+    movieId: string;
+  }[]
+> {
   try {
     const user = await fetchUserByEmail();
 
@@ -129,4 +128,47 @@ export async function fetchUserMovies() {
     console.error(error);
     throw new Error('Failed to fetch user movies');
   }
+}
+
+export async function fetchUserList(): Promise<Movie[]> {
+  const userTmdbMovies = await fetchUserMovies();
+
+  if (userTmdbMovies.length === 0) {
+    throw new Error('User has no movies');
+  }
+
+  try {
+    const moviePromises = userTmdbMovies.map(async movie => {
+      try {
+        const movieData = await fetchMovie(movie.movieId);
+
+        return movieData.data;
+      } catch (error) {
+        console.error(error);
+        return undefined;
+      }
+    });
+
+    const movieList = await Promise.all(moviePromises);
+
+    return movieList.filter(movie => movie !== undefined);
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch movie');
+  }
+}
+
+export async function getSessionEmail() {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    throw new Error('User not authenticated');
+  }
+
+  const userEmail = session.user.email;
+  if (!userEmail) {
+    throw new Error('User email not found');
+  }
+
+  return userEmail;
 }
